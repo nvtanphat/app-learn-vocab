@@ -202,13 +202,3 @@ body.dark-mode .difficult-word-item {
 body.dark-mode .difficult-word-name {
     color: var(--text-color);
 }
-
-@media (max-width: 480px) {
-    .stats-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .badges-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}

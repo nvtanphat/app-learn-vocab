@@ -184,10 +184,12 @@ nav {
     border-radius: 999px;
     box-shadow: var(--shadow-sm);
     gap: 0.5rem;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 .nav-btn {
-    flex: 1;
+    flex: 1 0 auto;
     border: none;
     background: transparent;
     padding: 0.75rem;
@@ -200,6 +202,8 @@ nav {
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+    white-space: nowrap;
+    min-width: fit-content;
 }
 
 .nav-btn:hover {
@@ -777,15 +781,4 @@ body.dark-mode #typing-input:focus {
 .result-meaning {
     color: var(--text-light);
     font-size: 0.9rem;
-}
-
-/* Responsive */
-@media (max-width: 480px) {
-    .options-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .card-wrapper {
-        height: 300px;
-    }
 }

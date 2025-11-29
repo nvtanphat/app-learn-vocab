@@ -234,14 +234,3 @@ body.dark-mode .game-header {
 body.dark-mode .memory-card-back {
     background: var(--card-bg);
 }
-
-/* Responsive */
-@media (max-width: 480px) {
-    .memory-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-    
-    .game-cards {
-        grid-template-columns: 1fr;
-    }
-}

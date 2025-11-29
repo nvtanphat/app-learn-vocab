@@ -1,0 +1,493 @@
+/* ========================================
+   RESPONSIVE STYLES FOR ALL SCREEN SIZES
+   ======================================== */
+
+/* Extra small devices (phones, portrait, less than 576px) */
+@media (max-width: 575.98px) {
+    body {
+        padding: 0.5rem;
+    }
+    
+    .app-container {
+        max-width: 100%;
+        min-height: 100vh;
+    }
+    
+    /* Header */
+    header h1 {
+        font-size: 1.2rem;
+    }
+    
+    .icon-btn {
+        font-size: 1rem;
+        padding: 0.4rem;
+    }
+    
+    /* Navigation */
+    nav {
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE/Edge */
+    }
+    
+    nav::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
+    }
+    
+    .nav-btn {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.85rem;
+        flex-shrink: 0;
+    }
+    
+    .nav-btn i {
+        font-size: 0.9rem;
+    }
+    
+    /* Flashcard */
+    .card-wrapper {
+        height: 280px;
+    }
+    
+    .card-front, .card-back {
+        padding: 1.5rem;
+    }
+    
+    #fc-word {
+        font-size: 1.8rem;
+    }
+    
+    #fc-pronunciation {
+        font-size: 1rem;
+    }
+    
+    #fc-meaning {
+        font-size: 1.2rem;
+    }
+    
+    .example {
+        font-size: 0.85rem;
+    }
+    
+    /* Controls */
+    .controls {
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+    
+    .control-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+    }
+    
+    .control-btn i {
+        display: none; /* Hide icons to save space */
+    }
+    
+    #progress-text {
+        width: 100%;
+        text-align: center;
+        order: -1;
+        margin-bottom: 0.5rem;
+    }
+    
+    .controls-extra {
+        gap: 0.5rem;
+    }
+    
+    .control-btn-small {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+    
+    .keyboard-hint {
+        display: none; /* Hide on mobile */
+    }
+    
+    /* Quiz */
+    .quiz-header {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+    }
+    
+    .quiz-header > span {
+        flex: 1 1 calc(50% - 0.25rem);
+        text-align: center;
+    }
+    
+    .quiz-mode-selector {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    .mode-btn {
+        flex: 1;
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+    }
+    
+    .highlight-word {
+        font-size: 1.5rem;
+    }
+    
+    .options-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    .option-btn {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+    }
+    
+    /* Typing */
+    .typing-input-area {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    #typing-input {
+        font-size: 1rem;
+        padding: 0.6rem 0.8rem;
+    }
+    
+    /* Games */
+    .game-cards {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .game-card {
+        padding: 1.5rem;
+    }
+    
+    .game-icon {
+        font-size: 3rem;
+    }
+    
+    .game-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+    
+    .game-header h2 {
+        font-size: 1.3rem;
+    }
+    
+    .game-stats {
+        width: 100%;
+        justify-content: space-around;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+    }
+    
+    .shuffle-letters {
+        gap: 0.4rem;
+    }
+    
+    .letter-box {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+    
+    .memory-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.5rem;
+    }
+    
+    .memory-card {
+        font-size: 0.7rem;
+    }
+    
+    .memory-card-front {
+        font-size: 1.5rem;
+    }
+    
+    .memory-card-back {
+        font-size: 0.7rem;
+    }
+    
+    .audio-btn-large {
+        width: 80px;
+        height: 80px;
+        font-size: 1.5rem;
+    }
+    
+    /* Progress */
+    .level-card {
+        padding: 1.5rem;
+    }
+    
+    .level-card h2 {
+        font-size: 1.5rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    .stat-card {
+        padding: 1rem;
+    }
+    
+    .badges-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.75rem;
+    }
+    
+    .badge-item {
+        padding: 0.75rem;
+    }
+    
+    .badge-icon {
+        font-size: 2rem;
+    }
+    
+    .badge-name {
+        font-size: 0.7rem;
+    }
+    
+    /* List Selector */
+    .selector-container {
+        padding: 1.5rem;
+        max-height: 95vh;
+    }
+    
+    .selector-container h2 {
+        font-size: 1.3rem;
+        padding-right: 2rem;
+    }
+    
+    .selector-subtitle {
+        font-size: 0.85rem;
+    }
+    
+    .list-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    .list-card {
+        padding: 1.25rem;
+    }
+    
+    .list-stats {
+        gap: 0.5rem;
+    }
+    
+    .list-stat-value {
+        font-size: 1.2rem;
+    }
+    
+    /* Data Management */
+    .data-btns {
+        flex-direction: column;
+    }
+    
+    .data-btn {
+        width: 100%;
+        min-width: unset;
+    }
+    
+    /* Search */
+    .search-container {
+        padding: 0.75rem;
+    }
+    
+    .result-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .nav-btn {
+        font-size: 0.9rem;
+    }
+    
+    .card-wrapper {
+        height: 320px;
+    }
+    
+    #fc-word {
+        font-size: 2.2rem;
+    }
+    
+    .options-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .list-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .app-container {
+        max-width: 720px;
+    }
+    
+    .nav-btn {
+        font-size: 0.95rem;
+        padding: 0.8rem 1rem;
+    }
+    
+    .card-wrapper {
+        height: 400px;
+    }
+    
+    .options-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .game-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .memory-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .badges-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .list-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .app-container {
+        max-width: 960px;
+    }
+    
+    .game-cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .badges-grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
+    
+    .list-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .app-container {
+        max-width: 1140px;
+    }
+    
+    .game-cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .badges-grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+    
+    .list-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Landscape orientation optimization */
+@media (max-height: 500px) and (orientation: landscape) {
+    .card-wrapper {
+        height: 250px;
+    }
+    
+    .level-card {
+        padding: 1rem;
+    }
+    
+    .level-card h2 {
+        font-size: 1.3rem;
+    }
+    
+    header {
+        margin-bottom: 1rem;
+    }
+    
+    .flashcard-container {
+        gap: 1rem;
+    }
+}
+
+/* High DPI screens (Retina displays) */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .card-front, .card-back {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+    /* Increase touch targets */
+    .nav-btn,
+    .control-btn,
+    .option-btn,
+    .icon-btn {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    /* Remove hover effects on touch devices */
+    .nav-btn:hover,
+    .control-btn:hover,
+    .option-btn:hover {
+        transform: none;
+    }
+    
+    /* Keep active state transforms */
+    .nav-btn:active,
+    .control-btn:active,
+    .option-btn:active {
+        transform: scale(0.95);
+    }
+}
+
+/* Print styles */
+@media print {
+    .header-actions,
+    nav,
+    .controls,
+    .controls-extra,
+    .actions,
+    .back-btn,
+    .data-management {
+        display: none;
+    }
+    
+    .app-container {
+        max-width: 100%;
+    }
+    
+    .card {
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+}
