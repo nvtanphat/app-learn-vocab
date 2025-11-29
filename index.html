@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Học Từ Vựng Tiếng Anh</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="progress-styles.css">
+    <link rel="stylesheet" href="games.css">
+    <link rel="stylesheet" href="list-selector.css">
+    <!-- SheetJS -->
+
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="header-top">
+                <h1><i class="fa-solid fa-graduation-cap"></i> English Master</h1>
+                <div class="header-actions">
+                    <button class="icon-btn" onclick="showListSelector()" title="Chọn nhóm từ">
+                        <i class="fa-solid fa-list"></i>
+                    </button>
+                    <button id="theme-toggle" class="icon-btn"><i class="fa-solid fa-moon"></i></button>
+                </div>
+            </div>
+            <nav>
+                <button class="nav-btn active" data-tab="flashcard"><i class="fa-solid fa-layer-group"></i> Flashcard</button>
+                <button class="nav-btn" data-tab="quiz"><i class="fa-solid fa-circle-question"></i> Quiz</button>
+                <button class="nav-btn" data-tab="typing"><i class="fa-solid fa-keyboard"></i> Gõ từ</button>
+                <button class="nav-btn" data-tab="games"><i class="fa-solid fa-gamepad"></i> Mini Games</button>
+                <button class="nav-btn" data-tab="progress"><i class="fa-solid fa-chart-line"></i> Tiến độ</button>
+                <button class="nav-btn" data-tab="search"><i class="fa-solid fa-magnifying-glass"></i> Tìm kiếm</button>
+            </nav>
+        </header>
+
+        <!-- List Selector (Shows first time) -->
+        <div id="list-selector-overlay" class="overlay hidden">
+            <div class="selector-container">
+                <button class="close-overlay-btn" onclick="hideListSelector()" title="Đóng">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                
+                <h2>📚 Chọn nhóm từ để học</h2>
+                <p class="selector-subtitle">Mỗi nhóm có 30 từ. Hãy chọn nhóm bạn muốn học!</p>
+                
+                <div class="list-grid" id="list-grid">
+                    <!-- Lists will be generated here -->
+                </div>
+                
+                <div class="current-list-info">
+                    <p>Nhóm hiện tại: <strong id="current-list-name">Chưa chọn</strong></p>
+                    <button class="change-list-btn" onclick="hideListSelector()">
+                        <i class="fa-solid fa-check"></i> Xong
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <main>
+            <!-- Flashcard Section -->
+            <section id="flashcard" class="tab-content active">
+                <div class="flashcard-container">
+                    <div class="card-wrapper">
+                        <div class="card" id="flashcard-element">
+                            <div class="card-front">
+                                <div class="card-header">
+                                    <span class="hint-text">Click để lật</span>
+                                    <button class="fav-btn" id="fc-fav-btn"><i class="fa-regular fa-star"></i></button>
+                                </div>
+                                <h2 id="fc-word">Loading...</h2>
+                                <p id="fc-pronunciation">/loading/</p>
+                                <button class="audio-btn" id="fc-audio-btn"><i class="fa-solid fa-volume-high"></i></button>
+                            </div>
+                            <div class="card-back">
+                                <h3 id="fc-meaning">Đang tải dữ liệu...</h3>
+                                <p id="fc-example" class="example"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="controls">
+                        <button id="prev-btn" class="control-btn"><i class="fa-solid fa-arrow-left"></i> Trước</button>
+                        <button id="flip-btn" class="control-btn flip-btn"><i class="fa-solid fa-repeat"></i> Lật thẻ</button>
+                        <span id="progress-text">0 / 0</span>
+                        <button id="next-btn" class="control-btn">Sau <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                    <div class="controls-extra">
+                        <button id="shuffle-btn" class="control-btn-small"><i class="fa-solid fa-shuffle"></i> Xáo trộn</button>
+                        <button id="autoplay-btn" class="control-btn-small"><i class="fa-solid fa-play"></i> Tự động</button>
+                        <span class="keyboard-hint">💡 Dùng ← → để chuyển thẻ</span>
+                    </div>
+                    <div class="actions">
+                        <button id="mark-learned-btn" class="action-btn"><i class="fa-regular fa-check-circle"></i> Đánh dấu đã thuộc</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quiz Section -->
+            <section id="quiz" class="tab-content">
+                <div class="quiz-container">
+                    <div class="quiz-header">
+                        <span class="score-display">Điểm: <span id="score">0</span></span>
+                        <span class="due-display">Cần ôn: <span id="due-count">0</span> <i class="fa-solid fa-clock"></i></span>
+                        <span class="streak-display">Chuỗi: <span id="streak">0</span> <i class="fa-solid fa-fire"></i></span>
+                    </div>
+                    
+                    <div class="quiz-mode-selector">
+                        <button class="mode-btn active" data-mode="normal">📝 Thường</button>
+                        <button class="mode-btn" data-mode="hard">🔥 Khó</button>
+                        <button class="mode-btn" data-mode="review">📚 Ôn sai</button>
+                    </div>
+
+                    <div class="question-card">
+
+                        <h3 id="quiz-question">Từ này nghĩa là gì?</h3>
+                        <h2 id="quiz-word" class="highlight-word">...</h2>
+                        <div class="options-grid" id="quiz-options">
+                            <!-- Options will be generated here -->
+                        </div>
+                    </div>
+                    <div id="quiz-feedback" class="feedback hidden"></div>
+                    <button id="next-question-btn" class="primary-btn hidden">Câu tiếp theo</button>
+                </div>
+            </section>
+
+            <!-- Typing Section -->
+            <section id="typing" class="tab-content">
+                <div class="typing-container">
+                    <div class="quiz-header">
+                        <span class="score-display">Điểm: <span id="typing-score">0</span></span>
+                    </div>
+                    <div class="question-card">
+                        <h3>Hãy gõ lại từ tiếng Anh có nghĩa là:</h3>
+                        <h2 id="typing-meaning" class="highlight-word">...</h2>
+                        <div class="typing-input-area">
+                            <input type="text" id="typing-input" placeholder="Nhập từ vựng..." autocomplete="off">
+                            <button id="typing-submit-btn" class="primary-btn">Kiểm tra</button>
+                        </div>
+                        <button id="typing-hint-btn" class="text-btn">Gợi ý (Xem chữ cái đầu)</button>
+                    </div>
+                    <div id="typing-feedback" class="feedback hidden"></div>
+                    <button id="typing-next-btn" class="primary-btn hidden">Từ tiếp theo</button>
+                </div>
+            </section>
+
+            <!-- Mini Games Section (NEW) -->
+            <section id="games" class="tab-content">
+                <div class="games-menu">
+                    <h2>🎮 Chọn Mini Game</h2>
+                    <div class="game-cards">
+                        <div class="game-card" onclick="startGame('puzzle')">
+                            <div class="game-icon">🧩</div>
+                            <h3>Word Puzzle</h3>
+                            <p>Sắp xếp chữ cái thành từ đúng</p>
+                        </div>
+                        <div class="game-card" onclick="startGame('typefast')">
+                            <div class="game-icon">⚡</div>
+                            <h3>Type Fast</h3>
+                            <p>Nghe và gõ từ nhanh nhất</p>
+                        </div>
+                        <div class="game-card" onclick="startGame('memory')">
+                            <div class="game-icon">🃏</div>
+                            <h3>Memory Match</h3>
+                            <p>Ghép từ với nghĩa</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Word Puzzle Game -->
+                <div id="puzzle-game" class="mini-game hidden">
+                    <button class="back-btn" onclick="backToGamesMenu()"><i class="fa-solid fa-arrow-left"></i> Quay lại</button>
+                    <div class="game-header">
+                        <h2>🧩 Word Puzzle</h2>
+                        <div class="game-stats">
+                            <span>Điểm: <strong id="puzzle-score">0</strong></span>
+                            <span>⏱️ <strong id="puzzle-timer">30</strong>s</span>
+                        </div>
+                    </div>
+                    <div class="question-card">
+                        <h3 id="puzzle-meaning">Nghĩa: ...</h3>
+                        <div class="shuffle-letters" id="shuffle-letters"></div>
+                        <input type="text" id="puzzle-input" placeholder="Nhập từ..." autocomplete="off">
+                        <button class="primary-btn" onclick="checkPuzzle()">Kiểm tra</button>
+                    </div>
+                    <div id="puzzle-feedback" class="feedback hidden"></div>
+                </div>
+
+                <!-- Type Fast Game -->
+                <div id="typefast-game" class="mini-game hidden">
+                    <button class="back-btn" onclick="backToGamesMenu()"><i class="fa-solid fa-arrow-left"></i> Quay lại</button>
+                    <div class="game-header">
+                        <h2>⚡ Type Fast</h2>
+                        <div class="game-stats">
+                            <span>Điểm: <strong id="typefast-score">0</strong></span>
+                            <span>Combo: <strong id="typefast-combo">0</strong>🔥</span>
+                            <span>⏱️ <strong id="typefast-timer">60</strong>s</span>
+                        </div>
+                    </div>
+                    <div class="question-card">
+                        <button class="audio-btn-large" id="typefast-audio">
+                            <i class="fa-solid fa-play"></i>
+                        </button>
+                        <p class="hint-text">Nghe và gõ từ bạn nghe được</p>
+                        <input type="text" id="typefast-input" placeholder="Gõ từ..." autocomplete="off">
+                    </div>
+                    <div id="typefast-feedback" class="feedback hidden"></div>
+                </div>
+
+                <!-- Memory Match Game -->
+                <div id="memory-game" class="mini-game hidden">
+                    <button class="back-btn" onclick="backToGamesMenu()"><i class="fa-solid fa-arrow-left"></i> Quay lại</button>
+                    <div class="game-header">
+                        <h2>🃏 Memory Match</h2>
+                        <div class="game-stats">
+                            <span>Cặp: <strong id="memory-pairs">0</strong>/6</span>
+                            <span>Lượt: <strong id="memory-moves">0</strong></span>
+                        </div>
+                    </div>
+                    <div class="memory-grid" id="memory-grid">
+                        <!-- Cards will be generated here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Progress Section (NEW) -->
+            <section id="progress" class="tab-content">
+                <div class="progress-container">
+                    <!-- Level & Badge -->
+                    <div class="level-card">
+                        <div class="level-info">
+                            <span class="level-badge" id="level-badge">Level 1</span>
+                            <h2 id="user-title">Người mới</h2>
+                        </div>
+                        <div class="xp-bar">
+                            <div class="xp-fill" id="xp-fill"></div>
+                        </div>
+                        <p class="xp-text"><span id="current-xp">0</span> / <span id="next-level-xp">100</span> XP</p>
+                    </div>
+
+                    <!-- Streak & Stats -->
+                    <div class="stats-grid">
+                        <div class="stat-card streak-card">
+                            <i class="fa-solid fa-fire stat-icon"></i>
+                            <h3 id="streak-days">0</h3>
+                            <p>Ngày liên tiếp</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fa-solid fa-bookmark stat-icon"></i>
+                            <h3 id="learned-count">0</h3>
+                            <p>Từ đã thuộc</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fa-solid fa-trophy stat-icon"></i>
+                            <h3 id="total-score">0</h3>
+                            <p>Điểm số</p>
+                        </div>
+                    </div>
+
+                    <!-- Badges -->
+                    <div class="badges-section">
+                        <h3>🏆 Huy hiệu</h3>
+                        <div class="badges-grid" id="badges-grid">
+                            <!-- Badges will be generated here -->
+                        </div>
+                    </div>
+
+                    <!-- Difficult Words -->
+                    <div class="difficult-words-section">
+                        <h3>⚠️ Từ hay sai (Cần ôn lại)</h3>
+                        <div class="difficult-words-list" id="difficult-words-list">
+                            <!-- Will be generated by JS -->
+                        </div>
+                    </div>
+                    
+                    <!-- Data Management -->
+                    <div class="data-management">
+                        <h3>💾 Quản lý dữ liệu</h3>
+                        <div class="data-btns">
+                            <button class="data-btn" onclick="exportProgress()">
+                                <i class="fa-solid fa-download"></i> Xuất dữ liệu
+                            </button>
+                            <button class="data-btn" onclick="document.getElementById('import-file').click()">
+                                <i class="fa-solid fa-upload"></i> Nhập dữ liệu
+                            </button>
+                            <button class="data-btn danger" onclick="resetProgress()">
+                                <i class="fa-solid fa-trash"></i> Xóa hết
+                            </button>
+                        </div>
+                        <input type="file" id="import-file" accept=".json" style="display: none" onchange="importProgress(event)">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Search Section -->
+
+            <section id="search" class="tab-content">
+                <div class="search-container">
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="search-input" placeholder="Nhập từ cần tìm...">
+                    </div>
+                    <div class="search-results" id="search-results">
+                        <!-- Results will be generated here -->
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+    </div>
+
+    <script src="list-manager.js"></script>
+    <script src="script.js"></script>
+    <script src="gamification.js"></script>
+    <script src="games.js"></script>
+    <script src="enhancements.js"></script>
+</body>
+
+
+</html>
